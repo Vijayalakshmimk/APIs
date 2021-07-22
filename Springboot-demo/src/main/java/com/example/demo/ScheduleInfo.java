@@ -1,4 +1,4 @@
-package com.example.demo;
+package src.main.java.com.example.demo;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -16,6 +16,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="schedule_info")
 public class ScheduleInfo implements Serializable {
+	
 	ScheduleInfo()
 	{
 		
@@ -140,9 +141,9 @@ public class ScheduleInfo implements Serializable {
 	public String convertDateFormat(String dateStr)
 	{
 		String s = "";
-		Date date = new Date(dateStr);
 		if(!isSelect)
 		{
+		Date date = new Date(dateStr);
 		int year = 1900+date.getYear();
 		int month = date.getMonth()+1;
 		int day = date.getDate();
@@ -158,6 +159,7 @@ public class ScheduleInfo implements Serializable {
 			try {
 				Date d = new SimpleDateFormat("YYYY-MM-DD").parse(dateStr);
 				s = new SimpleDateFormat("dd-MMM-yyyy").format(d);
+				s = s.replace("-", " ");
 				}
 			catch (ParseException e) 
 			{

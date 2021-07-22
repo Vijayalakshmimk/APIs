@@ -1,4 +1,4 @@
-package com.example.demo;
+package src.main.java.com.example.demo;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +27,14 @@ public class ScheduleService {
 		List<ScheduleInfo> scheduleList = schedulerepo.findAll();
 		if(scheduleList.size()>0)
 		{
-			scheduleList.forEach(i -> i.setFrequency(i.getFrequency()));
+			//scheduleList.forEach(i -> i.setFrequency(i.getFrequency()));
+			for(ScheduleInfo i : scheduleList)
+			{
+				i.setFrequency(i.getFrequency());
+				i.setStartDate(i.getStartDate());
+				i.setEndDate(i.getEndDate());
+			}
+			
 			return scheduleList;
 		}
 		else {
@@ -200,28 +207,16 @@ public class ScheduleService {
 	}
 	
 	private String getNextDay(String end) {
-		Date date = new Date(end);
-		try {
-			date = new SimpleDateFormat("YYYY-MM-DD").parse(end);
-		}
-		catch(ParseException e)
-		{
-			e.printStackTrace();	
-		}
+		Date date = new Date(end.replace("-", "/"));
 		Date nextDay = new Date(date.getTime() + (1000*60*60*24));
-		return convertDateFormat(nextDay.toString());
+		return convertDateFormat(nextDay.toLocaleString());
 	}
 
 	private String getPreviousDay(String start) 
 	{
-		Date date = new Date(start);
-		try {
-			date = new SimpleDateFormat("YYYY-MM-DD").parse(start);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		Date date = new Date(start.replace("-","/"));
 		Date yesterday = new Date(date.getTime() - (1000*60*60*24));
-		return convertDateFormat(yesterday.toString());
+		return convertDateFormat(yesterday.toLocaleString());
 	}
 
 	public String convertDateFormat(String datestr)
